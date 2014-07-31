@@ -71,9 +71,9 @@ get_header(); ?>
 	
 					<?php if ( comments_open() && ! is_single() ) : ?>
 					
-						<div class="comments-link">
-						<?php // comments_popup_link( '<span class="leave-reply">' . __( 'Leave a comment', 'twentythirteen' ) . '</span>', __( 'One comment so far', 'twentythirteen' ), __( 'View all % comments', 'twentythirteen' ) ); ?>
-						</div><!-- .comments-link -->
+					<div class="comments-link">
+					<?php // comments_popup_link( '<span class="leave-reply">' . __( 'Leave a comment', 'twentythirteen' ) . '</span>', __( 'One comment so far', 'twentythirteen' ), __( 'View all % comments', 'twentythirteen' ) ); ?>
+					</div><!-- .comments-link -->
 				
 					<?php endif; // comments_open() ?>
         			</div><!-- .entry-meta -->       
@@ -82,46 +82,42 @@ get_header(); ?>
 		</div> <!-- entry_content -->
 	</article>
 
+	<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentythirteen' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
 
 
-<?php // wp_link_pages(array('before' => '<p>Pages: ', 'after' => '</p>', 'next_or_number' => 'number')); ?>
+	<?php
+	if ($the_query->max_num_pages > 1) { // check if the max number of pages is greater than 1  ?>
 
-<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentythirteen' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
+	<nav class="navigation paging-navigation" role="navigation">
+	
+		<h1 class="screen-reader-text"><?php _e( 'Posts navigation', 'twentythirteen' ); ?></h1>
+		
+		<div class="nav-links">
+		
+			<div class="nav-previous">
+			<?php echo get_next_posts_link( '<span class="meta-nav">&larr;</span> Older posts', $the_query->max_num_pages ); // display older posts link ?>
+			</div>
+		
+			<div class="nav-next">
+			<?php echo get_previous_posts_link( 'Newer posts <span class="meta-nav">&rarr;</span>' ); // display newer posts link ?>
+			</div>
+		</div>
+	</nav>
+	<?php } ?>
 
+	<?php else: ?>
+	
+	<div class="entry-content">
+		<article>
+			<p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
+		</article>
+	</div>
 
-<?php
-
-if ($the_query->max_num_pages > 1) { // check if the max number of pages is greater than 1  ?>
-
-<nav class="navigation paging-navigation" role="navigation">
-<h1 class="screen-reader-text"><?php _e( 'Posts navigation', 'twentythirteen' ); ?></h1>
-<div class="nav-links">
-   <div class="nav-previous">
-      <?php echo get_next_posts_link( '<span class="meta-nav">&larr;</span> Older posts', $the_query->max_num_pages ); // display older posts link ?>
-    </div>
-    <div class="nav-next">
-      <?php echo get_previous_posts_link( 'Newer posts <span class="meta-nav">&rarr;</span>' ); // display newer posts link ?>
-    </div>
-</div>
-</nav>
-
-<?php } ?>
-
-<?php else: ?>
-<div class="entry-content">
-  <article>
-    <p><?php _e('Sorry, no posts matched your criteria.'); ?></p>
-  </article>
-</div>
-
-<?php endif; ?>
-
-
+	<?php endif; ?>
 
 		<?php // twentythirteen_child_paging_nav(); ?>     
          
 		     
-
 		</div><!-- #content -->
 	</div><!-- #primary -->
 
